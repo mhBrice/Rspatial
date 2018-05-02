@@ -5,14 +5,15 @@
 
 
 .gdbar img {
-  width: 130px !important;
-  height: 130px !important;
+  width: 110px !important;
+  height: 110px !important;
   margin: 0px 0px;
+  left: 30px
 }
 
 .gdbar {
-  width: 150px !important;
-  height: 150px !important;
+  width: 160px !important;
+  height: 120px !important;
 }
 
 slides > slide:not(.nobackground):before {
@@ -25,12 +26,10 @@ slides > slide:not(.nobackground):before {
 }
 
 /* section slides */
-/* slides > slide.dark {
-  background-color: white !important;
-  background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/BlankMap-World_gray.svg/1405px-BlankMap-World_gray.svg.png) !important;
-  background-size: cover !important;
+slides > slide.dark {
+  background-color: #6b6a6a !important;
 }
-*/
+
 
 
 a { /* hyperlink */
@@ -46,14 +45,24 @@ a { /* hyperlink */
   font-size: 70%
 }
 
+
 blockquote {
-    padding: 10px 20px;
-    margin: 0 0 0px;
-    font-size: 19px;
-    border-left: 7px solid #eee;
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 25px;
+  font-size: 22px;
+  line-height: 1.6;
+}
+blockquote:before {
+  color: #ccc;
+  margin-right: 0.5em;
+  vertical-align: -0.4em;
+}
+blockquote p {
+  display: inline;
 }
 
-<style type="text/css">
 
 header {
     width: 100%;
@@ -64,6 +73,12 @@ header {
     padding: 0;
 }
 
+.title-slide hgroup h1 {
+  font-size: 63px;
+  line-height: 1.4;
+  letter-spacing: -3px;
+  color: #515151;
+}
 
 h2 { /* Header 2 */
     margin:0;
@@ -95,4 +110,14 @@ pre { /* Code block - determines code spacing between lines */
 }
 
 
-</style>
+.column {
+    float: left;
+    width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
