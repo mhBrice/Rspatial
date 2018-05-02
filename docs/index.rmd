@@ -1240,7 +1240,7 @@ mapview(ruisso_env, zcol = "resid", cex = "COLI", legend = TRUE, col.regions = m
 <iframe src="img/globe.html">
 </iframe>
 
-> [R script for this `plotly` map](https://github.com/mhBrice/Rspatial/blob/master/world_globe.R)
+> [R script for this `plotly` map](https://github.com/mhBrice/Rspatial/blob/master/script/world_globe.R)
 
 ## Animated maps
 

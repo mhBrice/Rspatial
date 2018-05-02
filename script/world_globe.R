@@ -48,11 +48,13 @@ p <- plot_geo(d) %>%
   layout(
     showlegend = FALSE, geo = geo
   ) %>% 
-  layout(plot_bgcolor='#515151') %>% 
-  layout(paper_bgcolor='#515151') #will also accept paper_bgcolor='black' or paper_bgcolor='transparent'
+  layout(plot_bgcolor='transparent') %>% 
+  layout(paper_bgcolor='transparent')
+p
 
-#Sys.setenv("plotly_username"="my_user_name")
-#Sys.setenv("plotly_api_key"="api_key")
+# Connect to plotly
+# Sys.setenv("plotly_username" = "my_user_name")
+# Sys.setenv("plotly_api_key" = "api_key")
 
-htmlwidgets::saveWidget(p, "globe.html")
-plotly_IMAGE(p, width = 1000, height = 1000, scale=1,out_file = "img/globe.png")
+htmlwidgets::saveWidget(p, "img/globe.html")
+plotly_IMAGE(p, width = 1000, height = 1000, scale=1, out_file = "img/globe.png")
