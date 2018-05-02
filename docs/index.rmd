@@ -1204,7 +1204,7 @@ plot(st_geometry(qc_simple_prj), col = "grey85", bgc = "transparent", xpd =T)
 points(286543, 5038936, pch = 17, col = "#B00C0C")
 ```
 
-# Interactive map with `mapview`
+# Interactive maps with `mapview`
 
 ## Interactive map
 
@@ -1217,30 +1217,98 @@ ruisso_env <- left_join(ruisso_proj, env_var, by = "sample_pts")
 
 ## Interactive map
 
-```{r mapview1}
+```{r mapview1, eval=F}
 mapview(ruisso_env, zcol = 'COLI', legend=TRUE, layer.name = "E. coli density")
 ```
+<div align="center">
+```{r mapview1.1,echo=F}
+mapview(ruisso_env, zcol = 'COLI', legend=TRUE, layer.name = "E. coli density")
+```
+</div>
 
 ## Interactive map
 
-```{r mapview2}
+```{r mapview2, eval=F}
 mapview(ruisso_env, cex = "public_build", map.types = "Esri.WorldImagery")
 ```
+<div align="center">
+```{r mapview2.1,echo=F}
+mapview(ruisso_env, cex = "public_build", map.types = "Esri.WorldImagery")
+```
+</div>
 
 ## Interactive map
 
-```{r mapview3, fig.align="center"}
+```{r mapview3, eval=F}
 myPal <- colorRampPalette(brewer.pal(9, "YlGnBu"))
 mapview(ruisso_env, zcol = "resid", cex = "COLI", legend = TRUE, col.regions = myPal, 
         layer.name = "% of residential area")
 ```
+<div align="center">
+```{r mapview31, echo=F}
+myPal <- colorRampPalette(brewer.pal(9, "YlGnBu"))
+mapview(ruisso_env, zcol = "resid", cex = "COLI", legend = TRUE, col.regions = myPal, 
+        layer.name = "% of residential area")
+```
+</div>
 
 ## Interactive maps
 
-<iframe src="img/globe.html">
-</iframe>
+<div align="center">
+```{r, echo=F, warning=F, message=F}
+library(plotly)
 
-> [R script for this `plotly` map](https://github.com/mhBrice/Rspatial/blob/master/script/world_globe.R)
+df <- read.csv('https://raw.githubusercontent.com/plotly/datasets/master/globe_contours.csv')
+df$id <- seq_len(nrow(df))
+
+library(tidyr)
+d <- df %>%
+  gather(key, value, -id) %>%
+  separate(key, c("l", "line"), "\\.") %>%
+  spread(l, value)
+
+geo <- list(
+  showland = TRUE,
+  showlakes = TRUE,
+  showcountries = TRUE,
+  showocean = TRUE,
+  countrywidth = 0.5,
+  landcolor = toRGB("grey45"),
+  lakecolor = toRGB("#3EB3B3"),
+  oceancolor = toRGB("#3EB3B3"),
+  projection = list(
+    type = 'orthographic',
+    rotation = list(
+      lon = -50,
+      lat = 40,
+      roll = -5
+    )
+  ),
+  lonaxis = list(
+    showgrid = TRUE,
+    gridcolor = toRGB("grey80"),
+    gridwidth = 0.5
+  ),
+  lataxis = list(
+    showgrid = TRUE,
+    gridcolor = toRGB("grey80"),
+    gridwidth = 0.5
+  )
+)
+
+
+p <- plot_geo(d) %>%
+  layout(
+    showlegend = FALSE, geo = geo
+  ) %>% 
+  layout(plot_bgcolor='transparent') %>% 
+  layout(paper_bgcolor='transparent')
+p
+
+```
+</div>
+
+> [R script for this `plotly` map](https://github.com/mhBrice/Rspatial/blob/master/script/world_globe.R) 
 
 ## Animated maps
 
