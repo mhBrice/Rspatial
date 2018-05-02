@@ -46,6 +46,13 @@ a { /* hyperlink */
   font-size: 70%
 }
 
+blockquote {
+    padding: 10px 20px;
+    margin: 0 0 0px;
+    font-size: 19px;
+    border-left: 7px solid #eee;
+}
+
 <style type="text/css">
 
 header {
@@ -78,8 +85,8 @@ code.r { /* Code block */
 }
 
 /* inline code color */
-/* code {
-   color: darkgrey; } */
+code {
+   color: #990a3f; }
 
 pre { /* Code block - determines code spacing between lines */
     font-size: 20px;
