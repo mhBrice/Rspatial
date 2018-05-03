@@ -22,7 +22,7 @@ pkgs <- c("sf",
 new.pkg <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
 
 # Install
-if (length(new.pkg)) 
+if (length(new.pkg))
   install.packages(new.pkg, dependencies = TRUE)
 
 
@@ -69,7 +69,7 @@ download.file("http://donnees.ville.montreal.qc.ca/dataset/8c149ace-7b2f-4041-99
 download.file("http://cmm.qc.ca/fileadmin/user_upload/geomatique/UtilisationDuSol/2016_Shapefiles/660-US-2016.zip", destfile = "data/landuse.zip")
 
 # Unzip the main folder and name it "landuse"
-unzip("landuse.zip", exdir="data/landuse")
+unzip("data/landuse.zip", exdir="data/landuse")
 
 # get all the zip files inside the main folder "landuse"
 zipF <- list.files(path = "data/landuse/", pattern = "*.zip", full.names = TRUE)
@@ -100,7 +100,7 @@ st_write(LU_all, "data/LU_all.gpkg", driver = "GPKG")
 #-------------------------------------------------------------------------------#
 
 # Download shapefile from web page in your working directory
-download.file("http://donnees.ville.montreal.qc.ca/dataset/c128aff5-325c-4599-ab66-1c9d0b3abc94/resource/a37e11d4-f0a3-46a7-8636-76754fad72b3/download/courseau.zip", 
+download.file("http://donnees.ville.montreal.qc.ca/dataset/c128aff5-325c-4599-ab66-1c9d0b3abc94/resource/a37e11d4-f0a3-46a7-8636-76754fad72b3/download/courseau.zip",
               destfile = "data/courseau.zip")
 
 # Unzip the shapefile
@@ -118,4 +118,3 @@ download.file("http://cmm.qc.ca/fileadmin/user_upload/geomatique/IndiceCanopee/2
 
 # Unzip the main folder
 unzip("data/canopee.zip", exdir = "data")
-

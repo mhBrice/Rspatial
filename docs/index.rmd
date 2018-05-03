@@ -5,31 +5,33 @@ author: 'Marie-Hélène Brice, PhD student'
 # lang: french
 output:
   ioslides_presentation:
-    css: "my-theme.css"
+    css: "assets/my-theme.css"
+    includes:
+      in_header: "assets/kcheader.html"
     widescreen: true
     logo: ./img/inSilecoLogo.png
 ---
 
+
 ## Workshop outline
 
-<br> 
+<br>
 
 <img src="img/todo.png" style="float:right;width:170px;margin: 0px 0px">
 
-1. Why mapping in R?
+1. Why mapping in R?  &nbsp;[<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>](#3)
 
-2. Spatial data & Coordinate reference system
+2. Spatial data & Coordinate reference system  &nbsp;[<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>](#10)
 
-3. Importation & attribute manipulation of vector data with `sf`
+3. Importation & attribute manipulation of vector data with `sf`  &nbsp;[<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>](#18)
 
-4. Importation of raster data with `raster`
+4. Importation of raster data with `raster`  &nbsp;[<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>](#62)
 
-5. Geometry manipulations for vector and raster data
+5. Geometry manipulations for vector and raster data  &nbsp;[<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>](#73)
 
-6. Thematic & interactive maps
+6. Thematic & interactive maps  &nbsp;[<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>](#101)
 
-6. Questions, discussion, and use of your data
-
+7. Questions, discussion, and use of your data
 
 
 ```{r packages, message=F, eval = T, echo=F}
@@ -44,11 +46,12 @@ library(reshape2)
 ```
 
 ```{r setup, echo=FALSE}
-knitr::opts_chunk$set(fig.align = "center", fig.height = 5) 
+knitr::opts_chunk$set(fig.align = "center", fig.height = 5)
 ```
 
-# Why?
 
+
+# Why?
 
 ## Mapping in Ecology?
 
@@ -57,7 +60,7 @@ knitr::opts_chunk$set(fig.align = "center", fig.height = 5)
 knitr::include_graphics("https://insileco.github.io/post/rinspace_custommaps/index_files/figure-html/unnamed-chunk-1-1.png")
 ```
 
-<br> 
+<br>
 
 1. show where your plots are
 
@@ -67,7 +70,7 @@ knitr::include_graphics("https://insileco.github.io/post/rinspace_custommaps/ind
 </div>
 <br>
 
-[R code for this map](https://insileco.github.io/2018/04/06/r-in-space---custom-mapping/)
+<i class="fa fa-code" aria-hidden="true"></i> [R code for this map](https://insileco.github.io/2018/04/06/r-in-space---custom-mapping/)
 
 ## Why using R as a GIS?
 
@@ -76,13 +79,11 @@ knitr::include_graphics("https://insileco.github.io/post/rinspace_custommaps/ind
     - Very large number of packages
 
 
-
-
 ## Why using R as a GIS?
 
 1. Open-source, free
 
-1. **Workflow and replicability**
+1. **Workflow and reproducibility**
     - import, format, analyze, visualize, export your data
     - repeat with new data
     - create your own functions/packages
@@ -90,12 +91,11 @@ knitr::include_graphics("https://insileco.github.io/post/rinspace_custommaps/ind
 ![](img/phdcomics.gif)  
 
 
-
 ## Why using R as a GIS?
 
 1. Open-source, free
 
-1. Workflow and replicability
+1. Workflow and reproducibility
 
 2. **Quite efficient**
     - well-defined spatial classes
@@ -107,7 +107,7 @@ knitr::include_graphics("https://insileco.github.io/post/rinspace_custommaps/ind
 
 1. Open-source, free
 
-1. Workflow and replicability
+1. Workflow and reproducibility
 
 2. Quite efficient
 
@@ -119,44 +119,45 @@ knitr::include_graphics("https://insileco.github.io/post/rinspace_custommaps/ind
 
 > See [Chapter 10 of Geocomputation with R](https://geocompr.robinlovelace.net/gis.html#gis)
 
+
 ## But...
 
-Possible limitations
+### Possible limitations
 
-  - Geo-referencing  [<i class="fa fa-external-link" aria-hidden="true"></i>](http://robertmyles.github.io/2016/08/13/geo-reference-an-image-in-r/)
+  - Geo-referencing [<i class="fa fa-external-link" aria-hidden="true"></i>](http://robertmyles.github.io/2016/08/13/geo-reference-an-image-in-r/)
   - Visualizing large spatial objects
   - Watershed analysis
   - ...
+
+
+
 
 # Spatial data
 
 ## Vector data
 
-<br>
+<br><br>
 
-<br>
-
-```{r vector, echo=F, out.width = "80%", fig.align="center"}
+```{r vector, echo=F, out.width = "85%", fig.align="center"}
 include_graphics("https://insileco.github.io/post/rinspace_spobjects/index_files/figure-html/vector-data-1.png")
 ```
 
 ## Raster data
 
-<br>
+<br><br>
 
-<br>
-
-```{r raster, echo=F, out.width = "80%", fig.align="center"}
+```{r raster, echo=F, out.width = "85%", fig.align="center"}
 include_graphics("https://insileco.github.io/post/rinspace_spobjects/index_files/figure-html/raster-data-1.png")
 ```
+
+
 
 # Coordinate reference system
 
 
 ## Coordinate reference system (CRS)
 
-- Any place on the earth can be specified by a latitude and longitude or X/Y coordinates
-
+- Any place on Earth can be specified by a latitude and longitude or X/Y coordinates
 
 ```{r projmap, echo=F, out.width="50%"}
 include_graphics("http://gistbok.ucgis.org/sites/default/files/figure2-projections.png")
@@ -164,22 +165,22 @@ include_graphics("http://gistbok.ucgis.org/sites/default/files/figure2-projectio
 
 ## Geographic vs projected CRS
 
-**Geographic** (or unprojected) CRS 
+**Geographic** (or unprojected) CRS
 
-- Uses latitude and longitude coordinates, which are angles measured from the earth's center to a point on the earth's surface
-- 3-D representation of the earth (sphere or ellipsoid)
+- Latitude and longitude, *i.e.* angles measured from the Earth's center to a point on the Earth's surface
+- 3-D representation of Earth (sphere or ellipsoid)
 - Distance in geographic CRSs are therefore measured in degrees, not meters
-- Lat/lon can locate exact positions on earth's surface, but are not uniform units of measure
+- Lon/Lat locate any points on Earth's surface, but are not uniform units of measure
 
 **Projected** CRS
 
-- Uses cartesian coordinates, Easting and Northing (x and y) typically in meters
-- 2-D representation of the earth
+- Uses Cartesian coordinates, Easting and Northing (x and y) typically in meters
+- 2-D representation of Earth
 - All projected CRSs are based on a geographic CRS
-- Different mathematical formulas (i.e. projections) can transform the 3-D globle to a 2-D map
+- Different mathematical formulas (*i.e.* projections) can transform the 3-D globe to a 2-D map
+
 
 ## Projected vs geographic CRS
-
 
 ```{r canada, echo=F, warning=F, fig.height=4.8, fig.width=9}
 can <- raster::getData("GADM", country = "CAN", level = 1, path = "data/")
@@ -199,12 +200,13 @@ plot(st_geometry(qc_simple_prj), main = "Projected CRS - UTM", graticule=st_crs(
 > <br>
 > [What are projected coordinate systems?](http://desktop.arcgis.com/en/arcmap/10.3/guide-books/map-projections/about-projected-coordinate-systems.htm)
 
+
 ## Define CRS with EPSG or proj4string
 
 Many, many ways to represent the 3-D shape of the earth and to project it in a 2-D plane
 
-- each CRS can be define either by an `EPSG` or `proj4string`
-  
+- each CRS can be defined either by an `EPSG` or a `proj4string`
+
 > The EPSG code is a numeric representation of a CRS, while the proj4string reprensents the full set of parameters spelled out in a string:
 > <br>
 > EPSG `4326` <=> proj4 `+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs`
@@ -214,6 +216,10 @@ Many, many ways to represent the 3-D shape of the earth and to project it in a 2
 - All geographic files were created using a specific CRS - but it's not always defined!
 
 - To find CRS in any format: [Spatial Reference](http://spatialreference.org/)
+
+
+
+
 
 
 # Vector data with `sf`
@@ -227,28 +233,29 @@ Why use the `sf` package when `sp` is already tried and tested?
 - Simple features refers to a formal standard (ISO 19125-1:2004) that describes
 how objects in the real world can be represented in computers
 
-- Soon to be the successor of `sp`
+- successor of `sp`
 
 - `sf` incorporates the functionality of the 3 main packages of the `sp` paradigm in a single, cohesive whole:
-    - `sp` for the class system; 
-    - `rgdal` for reading and writing data; 
-    - `rgeos` for spatial operations undertaken by GEOS).
-    
-  
+
+    1. `sp` for the class system;
+    2. `rgdal` for reading and writing data;
+    3. `rgeos` for spatial operations undertaken by GEOS).
+
+
 
 ## Intro to Simple Features
 
-Why use the `sf` package when `sp` is already tried and tested?
+Why using `sf` while `sp` is still there and work just fine?
 
 - `sf` objects are easy to manipulate
   - Spatial objects are stored as data frames, with the feature geometries stored in list-columns
-  - All functions begin with `st_` for easy tab completion
-  - Functions are pipe-friendly `%>%`
+  - Functions begin with `st_` for easy tab completion
+  - Functions are pipe-friendly (`%>%`)
   - `dplyr` and `tidyr` verbs have been defined for the sf objects
-  - Fast reading and writing of data
-  - `ggplot` friendly
+  - Reading and writing data is really simple
+  - `ggplot2` friendly
 
-- GREAT documentation! [sf vignette](https://cran.rstudio.com/web/packages/sf/index.html)
+- GREAT documentation! See [sf vignettse](https://cran.rstudio.com/web/packages/sf/index.html)
 
 ## Intro to Simple Features
 
@@ -274,13 +281,13 @@ knitr::include_graphics("img/sf_object.png")
     - `MULTILINESTRING` - streams and rivers of Montreal ^1^
     - `MULTIPOLYGON` - polygons of land use types ^2^
     - `MULTIPOLYGON` - Canadian boundaries (retrieved directly from R)
-    
+
 - **Raster data**  
   - `raster` - canopy index of Montreal ^2^
   - `raster` - altitude (retrieved directly from R)
 
 </style>
-<div class="footer" style="margin-top;font-size:80%;"> 
+<div class="footer" style="margin-top;font-size:80%;">
 1. [Portail de données ouvertes de Montréal](http://donnees.ville.montreal.qc.ca/dataset)
 2. [Observatoire du Grand Montréal](http://cmm.qc.ca/donnees-et-territoire/observatoire-grand-montreal/produits-cartographiques/donnees-georeferencees/)
 </div>
@@ -301,7 +308,7 @@ library(mapview) # for interactive map
 # From csv to `MULTIPOINT`
 
 
-## Load and import sample points from a csv
+## Load and import sample points from a .csv file
 
 This dataset defines the localisation of the sampling points for the RUISSO program. The latter consists in analyzing the bacteriological and physicochemical quality of inland streams and watercourses in Montreal.
 
@@ -319,7 +326,7 @@ if (!file.exists("data/ruisso.csv"))
 > [Portail de données ouvertes de Montréal](http://donnees.ville.montreal.qc.ca/dataset)
 
 
-## Load and import sample points from a csv
+## Load and import sample points from a .csv file
 
 ```{r read_points2, message = F, warning =F}
 # Read csv file in R
@@ -340,7 +347,9 @@ ruisso_sf
 
 ## Simple mapping of `MULTIPOINT`
 
-Instead of creating a single map, as with `sp` object, the default plot of `sf` object creates multiple maps, one for each attribute, which can be useful for exploring the spatial distribution of different variables.
+Instead of creating a single map, as with `sp` object, the default plot of
+`sf` object creates multiple maps, one for each attribute, which can be useful
+for exploring the spatial distribution of different variables.
 
 ```{r plot_pts1, fig.height=4, fig.width=6}
 plot(ruisso_sf)  
@@ -369,9 +378,9 @@ if (!file.exists("data/donnees_ruisso_2016.csv"))
   destfile = "data/ruisso_data.csv")
 ```
 
-<br> 
+<br>
 
-> [Portail de données ouvertes de Montréal](http://donnees.ville.montreal.qc.ca/dataset)
+> <i class="fa fa-external-link" aria-hidden="true"></i> [Portail de données ouvertes de Montréal](http://donnees.ville.montreal.qc.ca/dataset)
 
 
 ## Load and import sample data from a csv
@@ -394,7 +403,8 @@ include_graphics("https://cdn-images-1.medium.com/max/1600/1*44nbQ40A1XYe97bixBg
 
 ## Join these sampled data as attributes
 
-Combining data from different sources is a common task in data preparation. `left_join()` from `dplyr` do this by combining tables based on a shared ‘key’ variable. 
+Combining data from different sources is a common task in data preparation.
+`left_join()` from `dplyr` do this by combining tables based on a shared ‘key’ variable.
 
 > See [dplyr and tidyr cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for other join functions.
 
@@ -422,15 +432,15 @@ dim(ruisso_sf1)
 Remove unwanted variables
 
 ```{r cleaning2}
-ruisso_sf2 <- dplyr::select(ruisso_sf1, 
-                            -Localisation, 
-                            -Activité, 
-                            -Raison.d.annulation, 
-                            -Signe.COLI, 
+ruisso_sf2 <- dplyr::select(ruisso_sf1,
+                            -Localisation,
+                            -Activité,
+                            -Raison.d.annulation,
+                            -Signe.COLI,
                             -MÉTÉO)
 ```
 
-> Note: Both `raster` and `dplyr` packages have a function called `select()`. To avoid an error message when both packages are loaded, we use the long-form function name: `dplyr::select()`.
+> Note: `raster` and `dplyr` packages have a function `select()`. To avoid an error message when both packages are loaded, we explicitly use the namespace of the package : `dplyr::select()`.
 
 ## Data cleaning
 
@@ -440,7 +450,7 @@ names(ruisso_sf2)
 
 ## Data cleaning
 
-Rename some variables
+Rename variables
 
 ```{r cleaning3}
 ruisso_sf3 <- rename(ruisso_sf2,
@@ -453,7 +463,7 @@ names(ruisso_sf3)
 
 ## Data cleaning
 
-Remove symbole from column names
+Remove symbols from column names:
 
 ```{r cleaning5}
 names(ruisso_sf3) <- gsub("\\..*", "", names(ruisso_sf3))
@@ -465,7 +475,7 @@ names(ruisso_sf3)
 
 ## Data cleaning
 
-Remove accent from column names
+Remove accents from column names
 
 ```{r cleaning6}
 names(ruisso_sf3) <- gsub("é", "e", names(ruisso_sf3))
@@ -528,7 +538,7 @@ We can write a simple features object to a file (*e.g.* a shapefile) using the
 st_write(ruisso_mean, dsn = "data/ruisso.shp", driver = "ESRI Shapefile", delete_dsn = T)
 ```
 
-> Some argument specifications varies by driver, see `?st_write`
+> Some argument specifications depend on the driver, see `?st_write`
 
 # Import `MULTIPOLYGON`
 
@@ -545,7 +555,9 @@ include_graphics("img/LU_montreal.jpeg")
 
 ## Load and import land use polygons
 
-Because the original dataset was composed of multiple individual shapefiles and were long to download, these manipulations should have been performed before the workshop using this [R script](https://github.com/mhBrice/Rspatial/blob/master/script/Rspatial_data.R). 
+Because the original dataset was composed of multiple individual shapefiles and
+were long to download, these manipulations should have been performed before
+the workshop using this [R script](https://github.com/mhBrice/Rspatial/blob/master/script/Rspatial_data.R).
 
 *Don't run these lines now!*
 ```{r lu_download, eval = F}
@@ -595,9 +607,10 @@ LU <- st_read(dsn = "data/LU_all.gpkg")
 
 ## Defining the crs with st_set_crs()
 
-To define the CRS when it's missing we can use `st_set_crs()`. 
+To define the CRS when it's missing we can use `st_set_crs()`.
 
-Note however that replacing crs does not reproject data. If we wanted to transform coordinate and reproject them, we would use `st_transform()`. 
+Note however that replacing crs does not re-project data. If we wanted to
+transform coordinate and re-project them, we would use `st_transform()`.
 
 ```{r set_crs_poly}
 LU <- st_set_crs(LU, 32188)
@@ -610,13 +623,13 @@ LU <- st_set_crs(LU, 32188)
 
 ## Simple mapping `MULTIPOLYGON`
 
-We can map only one land use at a time by subsetting first the `sf` object. `UTIL_SOL==1000` represents water. I don't recommend you try to plot everything... it would take forever!
+We can map only one land use at a time by subsetting first the `sf` object. `UTIL_SOL==1000` represents water. Don't try to plot everything... it would take forever!
 
 ```{r plot_poly, eval=F}
 plot(st_geometry(subset(LU, UTIL_SOL==1000)))
 ```
 
-```{r plot_poly2, echo=F}
+```{r plot_poly2, echo=F, fig.height = 4, fig.width = 5}
 par(mar=c(0,0,0,0))
 plot(st_geometry(subset(LU, UTIL_SOL==1000)))
 ```
@@ -629,10 +642,10 @@ segments. Invalid geometry can be ignored for mapping but cause problem for
 spatial operations.
 
 `st_is_valid()` returns a logical vector indicating for each polygon geometries
-whether it is topologically valid:
+indicating whether it is topologically valid:
 
 ```{r valid_poly}
-(invalid_poly <- which(!st_is_valid(LU)))
+head(invalid_poly <- which(!st_is_valid(LU)))
 ```
 
 ## Corrupt or invalid geometries?
@@ -664,26 +677,34 @@ plot(st_geometry(LU[1251,]), main = "Self-intersection")
 
 We can use `st_make_valid()` from `lwgeom` to make an invalid geometry valid
 
-```{r make_valid}
-LU_val <- st_make_valid(LU)
+```{r, echo = F}
+LU_val <- readRDS("data/LU_VAL.rds")
+```
 
+```
+LU_val <- st_make_valid(LU)
+```
+
+```{r make_valid}
 # let's verify if all geometries are now valid
 which(!st_is_valid(LU_val)) # yeah!
 ```
 
-# Exercise
+
+
+# Exercises
 
 ```{r, echo=F, out.height="200px"}
 include_graphics("https://media.giphy.com/media/zmNw0b29WEFO/giphy.gif")
 ```
 
-## Exercise
+## Exercises
 
 <ol>
 <li>Import a shapefile of watercourses in Montreal (courseau.shp) using `st_read(dsn = path_to_file, layer = file_name, driver = "ESRI Shapefile")` and name it `courseau`
 </ol>
 
-> If you did not load the shapefile before the workshop you can download it using `download.file()` from this link : http://donnees.ville.montreal.qc.ca/dataset/c128aff5-325c-4599-ab66-1c9d0b3abc94/resource/a37e11d4-f0a3-46a7-8636-76754fad72b3/download/courseau.zip 
+> If you did not load the shapefile before the workshop you can download it using `download.file()` from this link : http://donnees.ville.montreal.qc.ca/dataset/c128aff5-325c-4599-ab66-1c9d0b3abc94/resource/a37e11d4-f0a3-46a7-8636-76754fad72b3/download/courseau.zip
 
 <ol start="2">
 <li>Create a simple map of the geometry
@@ -734,18 +755,18 @@ plot(courseau["TYPE"], key.pos = 1, pal = brewer.pal(4, "Paired"))
 ## `raster` classes
 
 
-The R package raster provides three main classes of raster object:
+`raster` provides three main classes of raster object:
 
 <p>
 <img src="https://www.geoimage.com.au/images/Galleries/Spot1-4/spot_20mmulti_nr2_1000.jpg" style="float:left;width:350px;margin: 0px 20px">
-`RasterLayer` - a single-layer (variable) raster (e.g. elevation)
+`RasterLayer` - a single-layer (variable) raster (*e.g.* elevation)
 
-`RasterStack` - one single object several single-layer (variable) rasters stored in one or different files (e.g. Worldclim bioclimatic variables)
+`RasterStack` - one single object several single-layer (variable) rasters stored in one or different files (*e.g.* Worldclim bioclimatic variables)
 
-`RasterBrick` one single object several single-layer (variable) rasters stored in one single file (e.g. a single multispectral satellite file)
+`RasterBrick` one single object several single-layer (variable) rasters stored in one single file (*e.g.* a single multispectral satellite file)
 </p>
 
-> [Raster data](http://www.rspatial.org/spatial/rst/4-rasterdata.html)
+> <i class="fa fa-external-link" aria-hidden="true"></i> [Raster data](http://www.rspatial.org/spatial/rst/4-rasterdata.html)
 
 ## Import raster data
 
@@ -791,7 +812,7 @@ plot(canopee_mtl)
 ## Retrieving free GIS data: `getData`
 
 In package `raster`, `getData()` function generates requests to access to
-different spatial datasets (either `raster`or `sp`). Argument `name` specifies the dataset you wish to download.
+different spatial datasets (either `raster`or `sp` objects). Argument `name` specifies the dataset you wish to download.
 
 > `GADM` - global administrative boundaries at different level of administrative subdivision
 > <br>
@@ -832,13 +853,13 @@ par(mar=c(0,0,0,0))
 plot(altCAN)
 ```
 
-# Exercise
+# Exercises
 
 ```{r, echo=F, out.height="200px"}
 include_graphics("https://media.giphy.com/media/zmNw0b29WEFO/giphy.gif")
 ```
 
-## Exercise
+## Exercises
 
 1. use `getData()` to retrieve Canadian boundary map at the provincial level
     - `?getData`
@@ -847,13 +868,13 @@ include_graphics("https://media.giphy.com/media/zmNw0b29WEFO/giphy.gif")
 
 3. Subset the Quebec boundary in the column `NAME_1`
 
-4. Reproject your new object using the same projection that of the land use polygons (`st_crs(LU_val)` or with the EPSG code `32188`)
+4. Re-project your new object using the same projection that of the land use polygons (`st_crs(LU_val)` or with the EPSG code `32188`)
 
-5. Try to plot the geometry of the Quebec polygon. 
+5. Try to plot the geometry of the Quebec polygon.
 
 6. Try `qc_simple_prj <- st_simplify(qc_prj, dTolerance = 500, preserveTopology = F)` and plot the geometry of this new object. Is there a difference?
 
-## Exercise 
+## Exercise
 
 ```{r plot_qc_simple}
 plot(st_geometry(qc_simple_prj))
@@ -869,9 +890,9 @@ plot(st_geometry(qc_simple_prj))
 ruisso_buf <- st_buffer(st_geometry(ruisso_mean), dist = 0.01)
 ```
 
-> `dist is assumed to be in decimal degrees` This message indicates that sf assumes a distance value is given in degrees
+> `dist()` is assumed to be in decimal degrees` This message indicates that sf assumes a distance value is given in degrees
 
-> `st_buffer does not correctly buffer longitude/latitude data` This warning indicates that the result may be incorrect because `st_buffer` expects coordinates in a 2-D, Euclidian space, which is not the case for longitude latitude data. So we should reproject the data onto a projected CRS.
+> `st_buffer()` does not correctly buffer longitude/latitude data` This warning indicates that the result may be incorrect because `st_buffer` expects coordinates in a 2-D, Euclidean space, which is not the case for longitude latitude data. So we should re-project the data onto a projected CRS.
 
 ## Buffer
 
@@ -880,9 +901,9 @@ plot(st_geometry(ruisso_mean), pch = 19, cex= .8)
 plot(ruisso_buf, add = T, border= "blue3")
 ```
 
-## Change projection: `st_transform`
+## Change projection: `st_transform()`
 
-We can reproject the sample points using a suitable projection that has units of
+We can re-project the sample points using a suitable projection that has units of
 meters. To do this, we will use the projection from our land use polygons.
 
 ```{r proj}
@@ -908,15 +929,16 @@ plot(st_geometry(ruisso_proj), pch = 19, cex= .5)
 plot(st_geometry(ruisso_buf), add = T, border= "blue3")
 ```
 
-# Exercise
+
+# Exercises
 
 ```{r, echo=F, out.height="200px"}
 include_graphics("https://media.giphy.com/media/zmNw0b29WEFO/giphy.gif")
 ```
 
-## Exercise
+## Exercises
 
-1. Reproject the `courseau` object using the land use projection and name it `courseau_proj`
+1. Re-project the `courseau` object using the land use projection and name it `courseau_proj`
 
 2. Create a 300m buffer around each watercourse and name it `courseau_buf`. Plot the resulting geometry with `courseau_proj` on top.
 
@@ -932,7 +954,7 @@ courseau_buf <- st_buffer(st_geometry(courseau_proj), dist = 300)
 courseau_buf <- st_sf(ID = courseau_proj$OBJECTID_1, courseau_buf)
 ```
 
-## Exercise
+## Exercises
 
 ```{r exo_buf2, echo = F, fig.height =5}
 par(mar=c(0,0,3,0))
@@ -940,7 +962,7 @@ plot(st_geometry(courseau_buf), col=NA, border="black", main = "st_buffer")
 plot(courseau_proj["TYPE"], lwd = 1.2, add = T)
 ```
 
-## Exercise
+## Exercises
 
 ```{r exo_buf3, echo = F, fig.height =5}
 buf_union <- st_union(courseau_buf)
@@ -950,7 +972,7 @@ plot(st_geometry(courseau_buf), col=NA, border="black", main = "st_buffer")
 plot(st_geometry(buf_union), col=NA, border="black", main = "st_union")
 ```
 
-## Exercise
+## Exercises
 
 ```{r exo_buf4, echo = F, fig.height =5}
 ruisso_centroid <- st_centroid(ruisso_buf)
@@ -978,32 +1000,34 @@ LU_reclas <- LU_val %>%
                                UTIL_SOL == 1100 ~ "golf"))
 ```
 
-> `case_when` allows you to vectorise multiple if and else if statements 
+> `case_when` allows you to vectorize multiple if and else if statements
 
 
 ## Intersecting polygons for area calculations
 
-We now want to find the proportion of area per buffer occupied by different land use types. `st_intersection()` can be used to obtain the intersection of two geometries (i.e. the area covered by both).
+Now we aim at finding the proportion of area per buffer occupied by different
+land-use types. `st_intersection()` can be used to obtain the intersection of
+two geometries (i.e. the area covered by both).
 
 ```{r intersect}
 LU_inters <- st_intersection(LU_reclas, ruisso_buf)
-``` 
+```
 
 > `Warning: attribute variables are assumed to be spatially constant`
-> Attribute values are assigned to sub-geometries; if these are spatially 
-constant, as for instance for land use, then this is fine. If they are 
+> Attribute values are assigned to sub-geometries; if these are spatially
+constant, as for instance for land use, then this is fine. If they are
 aggregates, such as population count, then this is wrong.
 
 ## Intersecting polygons for area calculations
 
 ```{r plot_intersect, eval=F}
 plot(LU_inters["UTIL_SOL"])
-``` 
+```
 
 ```{r plot_intersect2, echo=F}
 par(mar=c(0,0,3,5))
 plot(LU_inters["UTIL_SOL"])
-``` 
+```
 
 
 ## Intersecting polygons for area calculations
@@ -1025,7 +1049,7 @@ head(LU_area)
 ## Intersecting polygons for area calculations
 
 ```{r intersect3}
-# buffer with 500m radius so area is pi*500^2 
+# buffer with 500m radius so area is pi*500^2
 # try st_area(ruisso_buf)
 
 # compute proportion for each land use
@@ -1042,7 +1066,7 @@ env_var <- dcast(data = LU_area, formula = sample_pts ~ UTIL_SOL, fill = 0)
 
 ## Crop a raster for faster computation
 
-`crop()` will decrease the extent of a raster using the extent of Montreal area. 
+`crop()` will decrease the extent of a raster using the extent of Montreal area.
 
 
 ```{r crop, message = F, fig.align="center", fig.width=4, fig.height=4}
@@ -1066,7 +1090,7 @@ plot(altCAN)
 plot(alt_crop)
 ```
 
-## Reproject a raster
+## Re-project a raster
 
 The projection of `alt_crop` is in longitude/latitude.
 
@@ -1074,7 +1098,7 @@ The projection of `alt_crop` is in longitude/latitude.
 alt_crop
 ```
 
-## Reproject a raster
+## Re-project a raster
 
 We can use `projectRaster()` to transform the CRS of one spatial object to match another spatial object
 
@@ -1085,7 +1109,7 @@ alt_proj
 ```
 
 
-## Extract and summarise raster values in buffer
+## Extract and summarize raster values in buffer
 
 Compute the mean altitude per buffer
 
@@ -1102,7 +1126,7 @@ env_var <- cbind.data.frame(env_var, altitude = sample_alt)
 
 <br>
 
-> Now that we have a clean data frame with water quality variables (mean measurements of water quality in different watercourses) and a data frame of landscape variables of interest (% of different land use types in a 500m buffer and mean altitude in a 500m buffer), we could performe various statistical analyses. 
+> Now that we have a clean data frame with water quality variables (mean measurements of water quality in different watercourses) and a data frame of landscape variables of interest (% of different land use types in a 500m buffer and mean altitude in a 500m buffer), we could perform various statistical analyses.
 > <br>
 
 <img src="img/rda.png" style="float:right;width:230px;height:230px;margin: 0px 20px">
@@ -1115,7 +1139,8 @@ env_var <- cbind.data.frame(env_var, altitude = sample_alt)
 
 ## Custom map
 
-`plot()` allows combination of multiple layers of information in a same graph, with the argument `add = T`
+`plot()` allows combination of multiple layers of information in a same graph
+using `add = T`
 
 ```{r custom, eval=F}
 plot(canopee_mtl)
@@ -1132,14 +1157,17 @@ plot(st_geometry(ruisso_proj), pch = 19, col = "#B00C0C", add = T)
 
 ## Custom map
 
-Change the color palette for the raster levels. There are 5 levels and only 2 are pertinent: 3 = low vegetation cover and 4 = canopy (see [here](http://cmm.qc.ca/fileadmin/user_upload/geomatique/IndiceCanopee/2015/CMM_indiceCanopee_2015_methodologie.pdf) for info on the classification).
+Change the color palette for the raster levels. There are 5 levels and only 2
+are pertinent:
+  - 3 = low vegetation cover
+  - 4 = canopy (see [here](http://cmm.qc.ca/fileadmin/user_upload/geomatique/IndiceCanopee/2015/CMM_indiceCanopee_2015_methodologie.pdf) for info on the classification).
 
 ```{r custom2, eval=F}
 myPal <- c("white", "white", "#BAE4B3", "#006D2C", "white") # color palette
 
 plot(canopee_mtl, col = myPal, legend = F) # canopy raster
 plot(st_geometry(subset(LU_val, UTIL_SOL==1000)), # UTIL_SOL==1000 -> rivers
-     col = "#7eb0fc", border = "#7eb0fc",add=T) 
+     col = "#7eb0fc", border = "#7eb0fc",add=T)
 plot(st_geometry(courseau_proj), col = "#034ebf", lwd = 1.5, add = T) # watercourse
 plot(st_geometry(ruisso_proj), pch = 19, col = "#B00C0C", add = T) # sample points
 legend("bottomright", legend = c("Low vegetation", "Canopy"),  # legend
@@ -1156,11 +1184,11 @@ par(mar=c(3,3,0,0))
 myPal <- c("white", "white", "#BAE4B3", "#006D2C", "white")
 
 plot(canopee_mtl, col = myPal, legend = F)
-plot(st_geometry(subset(LU_val, UTIL_SOL==1000)), 
-     col = "#7eb0fc", border = "#7eb0fc", add = T) 
+plot(st_geometry(subset(LU_val, UTIL_SOL==1000)),
+     col = "#7eb0fc", border = "#7eb0fc", add = T)
 plot(st_geometry(courseau_proj), col = "#034ebf", lwd = 1.5, add = T)
 plot(st_geometry(ruisso_proj), pch = 19, col = "#B00C0C", add = T)
-legend("bottomright", legend = c("Low vegetation", "Canopy"), 
+legend("bottomright", legend = c("Low vegetation", "Canopy"),
        fill = c("#BAE4B3", "#006D2C"), border="white", bty = "n")
 ```
 
@@ -1173,7 +1201,7 @@ par(mar=c(3,3,2,0))
 
 plot(canopee_mtl, col = myPal, legend = F) # canopy raster
 plot(st_geometry(subset(LU_val, UTIL_SOL == 1000)), # UTIL_SOL==1000 -> rivers
-     col = "#7eb0fc", border = "#7eb0fc", add = T) 
+     col = "#7eb0fc", border = "#7eb0fc", add = T)
 plot(st_geometry(courseau_proj), col = "#034ebf", lwd = 1.5, add = T) # watercourse
 plot(st_geometry(ruisso_proj), pch = 19, col = "#B00C0C", add = T) # sample points
 legend("bottomright", legend = c("Low vegetation", "Canopy"),  # legend
@@ -1191,14 +1219,14 @@ points(286543, 5038936, pch = 17, col = "#B00C0C") # point on Montreal
 par(mar=c(3,3,2,0))
 
 plot(canopee_mtl, col = myPal, legend = F)
-plot(st_geometry(subset(LU_val, UTIL_SOL==1000)), 
-     col = "#7eb0fc", border = "#7eb0fc", add=T) 
+plot(st_geometry(subset(LU_val, UTIL_SOL==1000)),
+     col = "#7eb0fc", border = "#7eb0fc", add=T)
 plot(st_geometry(courseau_proj), col = "#034ebf", lwd = 1.5, add = T)
 plot(st_geometry(ruisso_proj), pch = 19, col = "#B00C0C", add = T)
-legend("bottomright", legend = c("Low vegetation", "Canopy"), 
+legend("bottomright", legend = c("Low vegetation", "Canopy"),
        fill = c("#BAE4B3", "#006D2C"), border="white", bty = "n")
 
-par(fig = c(0.05, 0.5, 0.5, 1), mar = c(0,0,0,0), new = T) 
+par(fig = c(0.05, 0.5, 0.5, 1), mar = c(0,0,0,0), new = T)
 
 plot(st_geometry(qc_simple_prj), col = "grey85", bgc = "transparent", xpd =T)
 points(286543, 5038936, pch = 17, col = "#B00C0C")
@@ -1241,13 +1269,13 @@ mapview(ruisso_env, cex = "public_build", map.types = "Esri.WorldImagery")
 
 ```{r mapview3, eval=F}
 myPal <- colorRampPalette(brewer.pal(9, "YlGnBu"))
-mapview(ruisso_env, zcol = "resid", cex = "COLI", legend = TRUE, col.regions = myPal, 
+mapview(ruisso_env, zcol = "resid", cex = "COLI", legend = TRUE, col.regions = myPal,
         layer.name = "% of residential area")
 ```
 <div align="center">
 ```{r mapview31, echo=F}
 myPal <- colorRampPalette(brewer.pal(9, "YlGnBu"))
-mapview(ruisso_env, zcol = "resid", cex = "COLI", legend = TRUE, col.regions = myPal, 
+mapview(ruisso_env, zcol = "resid", cex = "COLI", legend = TRUE, col.regions = myPal,
         layer.name = "% of residential area")
 ```
 </div>
@@ -1300,15 +1328,15 @@ geo <- list(
 p <- plot_geo(d) %>%
   layout(
     showlegend = FALSE, geo = geo
-  ) %>% 
-  layout(plot_bgcolor='transparent') %>% 
+  ) %>%
+  layout(plot_bgcolor='transparent') %>%
   layout(paper_bgcolor='transparent')
 p
 
 ```
 </div>
 
-> [R script for this `plotly` map](https://github.com/mhBrice/Rspatial/blob/master/script/world_globe.R) 
+> <i class="fa fa-code" aria-hidden="true"></i> [R script for this `plotly` map](https://github.com/mhBrice/Rspatial/blob/master/script/world_globe.R)
 
 ## Animated maps
 
@@ -1316,7 +1344,7 @@ p
 include_graphics("https://user-images.githubusercontent.com/1825120/38543030-5794b6f0-3c9b-11e8-9da9-10ec1f3ea726.gif")
 ```
 
-> [Geocomputation with R](https://geocompr.robinlovelace.net/adv-map.html#animated-maps)
+> <i class="fa fa-code" aria-hidden="true"></i> [Geocomputation with R](https://geocompr.robinlovelace.net/adv-map.html#animated-maps)
 
 # Great online resources
 
@@ -1342,7 +1370,7 @@ Good tutorials for spatial data in R
 - [Attribute manipulations](https://insileco.github.io/2018/04/09/r-in-space---attribute-manipulations/)
 - [Tidy spatial data in R](http://strimas.com/r/tidy-sf/)
   </div>
-  
+
   <div class="column" style="font-size:19px">
 
 Maps in R
@@ -1366,4 +1394,3 @@ Get free data
 - EPSG: [link1](http://spatialreference.org/); [link2](http://epsg.io/)
   </div>
 </div>
-
