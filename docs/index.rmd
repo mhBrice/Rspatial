@@ -180,7 +180,7 @@ include_graphics("http://gistbok.ucgis.org/sites/default/files/figure2-projectio
 - Different mathematical formulas (*i.e.* projections) can transform the 3-D globe to a 2-D map
 
 
-## Projected vs geographic CRS
+## Geographic vs projected CRS
 
 ```{r canada, echo=F, warning=F, fig.height=4.8, fig.width=9}
 can <- raster::getData("GADM", country = "CAN", level = 1, path = "data/")
@@ -255,7 +255,7 @@ Why using `sf` while `sp` is still there and work just fine?
   - Reading and writing data is really simple
   - `ggplot2` friendly
 
-- GREAT documentation! See [sf vignettse](https://cran.rstudio.com/web/packages/sf/index.html)
+- GREAT documentation! See [sf vignettes](https://cran.rstudio.com/web/packages/sf/index.html)
 
 ## Intro to Simple Features
 
@@ -499,7 +499,7 @@ We will use the mean of water quality measurements.
 ```{r summ_attribute2, warning=F, fig.width=6, fig.height=5}
 ruisso_mean <- ruisso_sf3 %>%
   group_by(sample_pts) %>% # split the data into groups of samples
-  summarise_at(vars(O2:Zn), mean, na.rm = TRUE) # compute the mean by group on selected variables
+  summarise_at(vars(O2:Zn), mean, na.rm = TRUE) # mean by group on selected variables
 ruisso_mean
 ```
 
@@ -532,7 +532,7 @@ plot(ruisso_mean["Temperature"],
 ## Export your `MULTIPOINT` to a Shapefile
 
 We can write a simple features object to a file (*e.g.* a shapefile) using the
-`st_write()` function in `sf` (see [vignette](https://cran.r-project.org/web/packages/sf/vignettes/sf2.html))
+`st_write()` function in `sf` (see [vignette #2](https://cran.r-project.org/web/packages/sf/vignettes/sf2.html))
 
 ```{r export, warnings = FALSE, results="hide"}
 st_write(ruisso_mean, dsn = "data/ruisso.shp", driver = "ESRI Shapefile", delete_dsn = T)
@@ -555,9 +555,7 @@ include_graphics("img/LU_montreal.jpeg")
 
 ## Load and import land use polygons
 
-Because the original dataset was composed of multiple individual shapefiles and
-were long to download, these manipulations should have been performed before
-the workshop using this [R script](https://github.com/mhBrice/Rspatial/blob/master/script/Rspatial_data.R).
+The land use dataset is composed of multiple individual shapefiles, the following manipulations allow to download, unzip all the individual files, combine them and save the resulting file as a `GeoPackage`. These manipulations can take a few minutes and should have been performed before the workshop using this [R script](https://github.com/mhBrice/Rspatial/blob/master/script/Rspatial_data.R).
 
 *Don't run these lines now!*
 ```{r lu_download, eval = F}
@@ -621,7 +619,7 @@ LU <- st_set_crs(LU, 32188)
 > [sf vignette #3](https://cran.r-project.org/web/packages/sf/vignettes/sf3.html#coordinate-reference-systems-conversion-and-transformation)
 
 
-## Simple mapping `MULTIPOLYGON`
+## Simple mapping of `MULTIPOLYGON`
 
 We can map only one land use at a time by subsetting first the `sf` object. `UTIL_SOL==1000` represents water. Don't try to plot everything... it would take forever!
 
@@ -726,21 +724,21 @@ courseau <- st_read(dsn = "data/courseau/", layer = "courseau", quiet = T)
 ```
 
 
-## Exercise
+## Exercises
 
 ```{r see_line}
 courseau
 ```
 
 
-## Exercise
+## Exercises
 
 ```{r plot_line, echo=F}
 par(mar=c(0,0,0,0))
 plot(st_geometry(courseau))
 ```
 
-## Exercise
+## Exercises
 
 ```{r plot_line2, echo=F}
 par(mar=c(0,0,0,0))
@@ -765,6 +763,8 @@ plot(courseau["TYPE"], key.pos = 1, pal = brewer.pal(4, "Paired"))
 
 `RasterBrick` one single object several single-layer (variable) rasters stored in one single file (*e.g.* a single multispectral satellite file)
 </p>
+
+<br>
 
 > <i class="fa fa-external-link" aria-hidden="true"></i> [Raster data](http://www.rspatial.org/spatial/rst/4-rasterdata.html)
 
@@ -874,7 +874,7 @@ include_graphics("https://media.giphy.com/media/zmNw0b29WEFO/giphy.gif")
 
 6. Try `qc_simple_prj <- st_simplify(qc_prj, dTolerance = 500, preserveTopology = F)` and plot the geometry of this new object. Is there a difference?
 
-## Exercise
+## Exercises
 
 ```{r plot_qc_simple}
 plot(st_geometry(qc_simple_prj))
@@ -890,9 +890,9 @@ plot(st_geometry(qc_simple_prj))
 ruisso_buf <- st_buffer(st_geometry(ruisso_mean), dist = 0.01)
 ```
 
-> `dist()` is assumed to be in decimal degrees` This message indicates that sf assumes a distance value is given in degrees
+> `dist() is assumed to be in decimal degrees` This message indicates that sf assumes a distance value is given in degrees
 
-> `st_buffer()` does not correctly buffer longitude/latitude data` This warning indicates that the result may be incorrect because `st_buffer` expects coordinates in a 2-D, Euclidean space, which is not the case for longitude latitude data. So we should re-project the data onto a projected CRS.
+> `st_buffer() does not correctly buffer longitude/latitude data` This warning indicates that the result may be incorrect because `st_buffer` expects coordinates in a 2-D, Euclidean space, which is not the case for longitude latitude data. So we should re-project the data onto a projected CRS.
 
 ## Buffer
 
@@ -1021,12 +1021,12 @@ aggregates, such as population count, then this is wrong.
 ## Intersecting polygons for area calculations
 
 ```{r plot_intersect, eval=F}
-plot(LU_inters["UTIL_SOL"])
+plot(LU_inters["UTIL_SOL"], key.pos = 1)
 ```
 
 ```{r plot_intersect2, echo=F}
-par(mar=c(0,0,3,5))
-plot(LU_inters["UTIL_SOL"])
+par(mar=c(0,0,0,0))
+plot(LU_inters["UTIL_SOL"], key.pos = 1)
 ```
 
 
@@ -1135,7 +1135,7 @@ env_var <- cbind.data.frame(env_var, altitude = sample_alt)
 
 
 
-# Custom map
+# Custom map using base plot
 
 ## Custom map
 
