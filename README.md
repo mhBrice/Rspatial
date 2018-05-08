@@ -2,6 +2,10 @@
 
 This presentation was developed for the Quebec Center for Biodiversity Science (QCBS) R Symposium.
 
+Workshop slides : https://mhbrice.github.io/Rspatial/
+
+Workshop script : https://mhbrice.github.io/Rspatial/Rspatial_script.html
+
 # Abstract
 
 The processing and analysis of spatial data under R goes back more than a decade ago. With a wide range of packages, R enables advanced geospatial statistics, modeling and visualization. But, why use R to manipulate spatial objects when there are very powerful and specialized tools (like ArcGIS or QGIS)? The answer lies in task automation and reproducibility of the entire workflow (importation, modification of geometry, statistical analysis, cartography, exportation).
