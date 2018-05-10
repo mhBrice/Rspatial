@@ -677,7 +677,7 @@ We can use `st_make_valid()` from `lwgeom` to make an invalid geometry valid
 LU_val <- readRDS("data/LU_VAL.rds")
 ```
 
-```
+```{r, echo=T,eval=F}
 LU_val <- st_make_valid(LU)
 ```
 
@@ -708,8 +708,9 @@ include_graphics("https://media.giphy.com/media/zmNw0b29WEFO/giphy.gif")
 <li>Create a simple thematic map of watercourse `TYPE`. You can change the default colors using the argument `pal`. [<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>](#44)
 </ol>
 
+## Responses
 
-```{r read_courseau, echo=F, warning=F, message=F}
+```{r read_courseau, echo=T, warning=F, message=F}
 # Download shapefile from web page in your working directory
 if (!file.exists("data/courseau.zip"))
   download.file("http://donnees.ville.montreal.qc.ca/dataset/c128aff5-325c-4599-ab66-1c9d0b3abc94/resource/a37e11d4-f0a3-46a7-8636-76754fad72b3/download/courseau.zip", destfile = "data/courseau.zip")
@@ -717,28 +718,28 @@ if (!file.exists("data/courseau.zip"))
 # Unzip the main folder
 unzip("data/courseau.zip", exdir = "data/courseau")
 
-# For GeoJSON, dsn may be the character string holding the geojson data
+# For shapefiles, dsn may be the character string holding the geojson data
 courseau <- st_read(dsn = "data/courseau/", layer = "courseau", quiet = T)
 ```
 
 
-## Exercises
+## Responses
 
 ```{r see_line}
 courseau
 ```
 
 
-## Exercises
+## Responses
 
-```{r plot_line, echo=F}
+```{r plot_line, echo=T}
 par(mar=c(0,0,0,0))
 plot(st_geometry(courseau))
 ```
 
-## Exercises
+## Responses
 
-```{r plot_line2, echo=F}
+```{r plot_line2, echo=T}
 par(mar=c(0,0,0,0))
 plot(courseau["TYPE"], key.pos = 1, pal = brewer.pal(4, "Paired"))
 ```
@@ -872,7 +873,22 @@ include_graphics("https://media.giphy.com/media/zmNw0b29WEFO/giphy.gif")
 
 6. Try `qc_simple_prj <- st_simplify(qc_prj, dTolerance = 500, preserveTopology = F)` and plot the geometry of this new object. Is there a difference?
 
-## Exercises
+## Responses
+
+```{r getdata2, echo=T, warning=F, fig.height=4.8, fig.width=9}
+# get canada boundary map
+can <- raster::getData("GADM", country = "CAN", level = 1, path = "data/")
+# convert to sf
+can <- st_as_sf(can)
+# Subset Quebec
+qc <- can[can$NAME_1 == "Québec",]
+# transform projection
+qc_prj <- st_transform(qc, 32188)
+# simplify the polygons so it's lighter
+qc_simple_prj <- st_simplify(qc_prj, dTolerance = 500, preserveTopology = F)
+```
+
+## Responses
 
 ```{r plot_qc_simple}
 plot(st_geometry(qc_simple_prj))
@@ -946,35 +962,58 @@ include_graphics("https://media.giphy.com/media/zmNw0b29WEFO/giphy.gif")
 
 > For more geometric operations such as `st_distance()`, `st_convex_hull()`, `st_intersection()` see [sf vignette #3](https://cran.r-project.org/web/packages/sf/vignettes/sf3.html)
 
-```{r exo_buf, echo = F}
+## Responses
+
+```{r exo_buf, echo = T}
+# transform projection
 courseau_proj <- st_transform(courseau, crs = st_crs(LU_val))
+# create buffer
 courseau_buf <- st_buffer(st_geometry(courseau_proj), dist = 300)
+# add an unique ID to your buffer
 courseau_buf <- st_sf(ID = courseau_proj$OBJECTID_1, courseau_buf)
 ```
 
-## Exercises
+## Responses
 
-```{r exo_buf2, echo = F, fig.height =5}
+```{r exo_buf2, echo = T,eval=F}
+plot(st_geometry(courseau_buf), col=NA, border="black", main = "st_buffer")
+plot(courseau_proj["TYPE"], lwd = 1.2, add = T)
+```
+
+```{r exo_buf2.1, echo = F, fig.height =4.5}
 par(mar=c(0,0,3,0))
 plot(st_geometry(courseau_buf), col=NA, border="black", main = "st_buffer")
 plot(courseau_proj["TYPE"], lwd = 1.2, add = T)
 ```
 
-## Exercises
+## Responses
 
-```{r exo_buf3, echo = F, fig.height =5}
+```{r exo_buf3, echo = T, eval=F}
+# compute buffer
 buf_union <- st_union(courseau_buf)
+plot(st_geometry(courseau_buf), col=NA, border="black", main = "st_buffer")
+plot(st_geometry(buf_union), col=NA, border="black", main = "st_union")
+```
 
+```{r exo_buf3.1, echo = F, fig.height =4.5}
+buf_union <- st_union(courseau_buf)
 par(mfrow=c(1,2), mar=c(0,0,3,0))
 plot(st_geometry(courseau_buf), col=NA, border="black", main = "st_buffer")
 plot(st_geometry(buf_union), col=NA, border="black", main = "st_union")
 ```
 
-## Exercises
+## Responses
 
-```{r exo_buf4, echo = F, fig.height =5}
+```{r exo_buf4, echo = T, eval=F}
+# compute centroid
 ruisso_centroid <- st_centroid(ruisso_buf)
+plot(st_geometry(ruisso_buf), col=NA, border="black", main = "st_centroid")
+plot(st_geometry(ruisso_centroid), pch = 19, col="red", add = T)
+```
 
+```{r exo_buf4.1, echo = F, fig.height =4.5}
+# compute centroid
+ruisso_centroid <- st_centroid(ruisso_buf)
 par(mar=c(0,0,3,0))
 plot(st_geometry(ruisso_buf), col=NA, border="black", main = "st_centroid")
 plot(st_geometry(ruisso_centroid), pch = 19, col="red", add = T)
@@ -1114,7 +1153,7 @@ We can use `projectRaster()` to transform the CRS of one spatial object to match
 ```{r proj_raster2, message = F}
 st_crs(LU_val)[[2]] # to retrieve the proj4string
 alt_proj <- projectRaster(alt_crop, crs = st_crs(LU_val)[[2]])
-plot(alt_proj)
+alt_proj
 ```
 
 
