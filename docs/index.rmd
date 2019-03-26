@@ -50,13 +50,13 @@ library(reshape2)
 
 
 
-# Why?
+# Why 
 
 ## Mapping in Ecology?
 
 <div class="columns-2">
 ```{r, echo=F, out.width="90%", fig.align="center"}
-knitr::include_graphics("https://insileco.github.io/post/rinspace_custommaps/index_files/figure-html/unnamed-chunk-1-1.png")
+knitr::include_graphics("img/thematic-map.png")
 ```
 
 <br>
@@ -69,7 +69,7 @@ knitr::include_graphics("https://insileco.github.io/post/rinspace_custommaps/ind
 </div>
 <br>
 
-<i class="fa fa-code" aria-hidden="true"></i> [R code for this map](https://insileco.github.io/2018/04/06/r-in-space---custom-mapping/)
+<i class="fa fa-code" aria-hidden="true"></i> [R code for this map](https://insileco.github.io/tuto/rinspace/rinspace_custommaps/)
 
 ## Why using R as a GIS?
 
@@ -138,7 +138,7 @@ knitr::include_graphics("https://insileco.github.io/post/rinspace_custommaps/ind
 <br><br>
 
 ```{r vector, echo=F, out.width = "85%", fig.align="center"}
-include_graphics("https://insileco.github.io/post/rinspace_spobjects/index_files/figure-html/vector-data-1.png")
+include_graphics("img/vector-data.png")
 ```
 
 ## Raster data
@@ -146,7 +146,7 @@ include_graphics("https://insileco.github.io/post/rinspace_spobjects/index_files
 <br><br>
 
 ```{r raster, echo=F, out.width = "85%", fig.align="center"}
-include_graphics("https://insileco.github.io/post/rinspace_spobjects/index_files/figure-html/raster-data-1.png")
+include_graphics("img/raster-data.png")
 ```
 
 
